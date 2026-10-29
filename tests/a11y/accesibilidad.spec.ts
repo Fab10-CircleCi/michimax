@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { join } from "node:path";
-import { formatViolations, type AxeViolation } from "./axe-report";
+import { formatReport, type AxeViolation, type PageViolations } from "./axe-report";
 import { discoverStaticRoutes, toInternalPage } from "./routes";
 
 const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
@@ -27,8 +27,8 @@ test.describe("Accesibilidad (axe-core)", () => {
   for (const route of staticRoutes) {
     test(`página ${route}`, async ({ page }, testInfo) => {
       const violations = await scan(page, route);
-      const label = `${route} (${testInfo.project.name})`;
-      expect(violations.length, formatViolations(violations, label)).toBe(0);
+      const report = formatReport([{ page: route, violations }], testInfo.project.name);
+      expect(violations.length, report).toBe(0);
     });
   }
 
@@ -36,22 +36,16 @@ test.describe("Accesibilidad (axe-core)", () => {
     const origin = new URL(baseURL ?? "http://localhost:3000").origin;
     const queue = [...staticRoutes];
     const seen = new Set(staticRoutes);
-    const reports: string[] = [];
-    let scanned = 0;
+    const results: PageViolations[] = [];
 
     while (queue.length > 0 && seen.size <= MAX_CRAWLED_PAGES) {
       const route = queue.shift()!;
-      const isStatic = staticRoutes.includes(route);
 
-      if (isStatic) {
+      if (staticRoutes.includes(route)) {
         // Las rutas estáticas ya tienen su propia prueba; aquí solo se leen sus enlaces.
         await page.goto(route, { waitUntil: "load" });
       } else {
-        const violations = await scan(page, route);
-        scanned += 1;
-        if (violations.length > 0) {
-          reports.push(formatViolations(violations, `${route} (${testInfo.project.name})`));
-        }
+        results.push({ page: route, violations: await scan(page, route) });
       }
 
       for (const link of await internalLinks(page, origin)) {
@@ -62,8 +56,10 @@ test.describe("Accesibilidad (axe-core)", () => {
       }
     }
 
-    testInfo.annotations.push({ type: "páginas escaneadas", description: String(scanned) });
-    expect(scanned, "No se descubrió ninguna página dinámica para revisar").toBeGreaterThan(0);
-    expect(reports.length, reports.join(`\n\n${"─".repeat(60)}\n\n`)).toBe(0);
+    testInfo.annotations.push({ type: "páginas escaneadas", description: String(results.length) });
+    expect(results.length, "No se descubrió ninguna página dinámica para revisar").toBeGreaterThan(0);
+
+    const failing = results.filter((result) => result.violations.length > 0);
+    expect(failing.length, formatReport(failing, testInfo.project.name)).toBe(0);
   });
 });

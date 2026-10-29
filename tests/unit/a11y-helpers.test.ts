@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { formatViolations, type AxeViolation } from "../a11y/axe-report";
+import { formatReport, type AxeViolation } from "../a11y/axe-report";
 import { discoverStaticRoutes, toInternalPage } from "../a11y/routes";
 
 function page(dir: string, ...segments: string[]) {
@@ -41,29 +41,45 @@ describe("toInternalPage", () => {
   });
 });
 
-describe("formatViolations", () => {
-  it("resume regla, selector, HTML y cómo arreglarlo", () => {
-    const violation = {
-      id: "color-contrast",
-      impact: "serious",
-      help: "Elements must meet minimum color contrast ratio thresholds",
-      helpUrl: "https://dequeuniversity.com/rules/axe/4.11/color-contrast",
-      nodes: [
-        {
-          target: [".contador"],
-          html: '<span class="contador">\n  1.2k\n</span>',
-          failureSummary: "Fix any of the following:\n  Element has insufficient color contrast of 2.15",
-        },
-      ],
-    } as unknown as AxeViolation;
+describe("formatReport", () => {
+  const violation = {
+    id: "color-contrast",
+    impact: "serious",
+    help: "Elements must meet minimum color contrast ratio thresholds",
+    helpUrl: "https://dequeuniversity.com/rules/axe/4.14/color-contrast",
+    nodes: [
+      {
+        target: [".contador"],
+        html: '<span class="contador">\n  1.2k\n</span>',
+        failureSummary: "Fix any of the following:\n  Element has insufficient color contrast of 2.15",
+      },
+    ],
+  } as unknown as AxeViolation;
 
-    const report = formatViolations([violation], "/telenovelas/michimar (movil)");
+  it("resume regla, páginas, selector, HTML y cómo arreglarlo", () => {
+    const report = formatReport([{ page: "/telenovelas/michimar", violations: [violation] }], "movil");
 
-    expect(report).toContain("1 regla con violaciones de accesibilidad (1 elemento) en /telenovelas/michimar (movil)");
+    expect(report).toContain("1 regla con violaciones de accesibilidad en 1 página (movil)");
     expect(report).toContain("[color-contrast] impacto: serious");
+    expect(report).toContain("Páginas: /telenovelas/michimar");
     expect(report).toContain("Selector: .contador");
     expect(report).toContain('HTML: <span class="contador"> 1.2k </span>');
     expect(report).toContain("insufficient color contrast of 2.15");
-    expect(report).toContain("https://dequeuniversity.com/rules/axe/4.11/color-contrast");
+    expect(report).toContain("https://dequeuniversity.com/rules/axe/4.14/color-contrast");
+  });
+
+  it("agrupa la misma violación de varias páginas en una sola entrada", () => {
+    const report = formatReport(
+      [
+        { page: "/telenovelas/michimar", violations: [violation] },
+        { page: "/telenovelas/rubi-la-siamesa", violations: [violation] },
+      ],
+      "escritorio",
+    );
+
+    expect(report).toContain("1 regla con violaciones de accesibilidad en 2 páginas");
+    expect(report).toContain("Páginas: /telenovelas/michimar, /telenovelas/rubi-la-siamesa");
+    expect(report).toContain("Elementos afectados: 1 distintos");
+    expect(report.match(/Selector:/g)).toHaveLength(1);
   });
 });
