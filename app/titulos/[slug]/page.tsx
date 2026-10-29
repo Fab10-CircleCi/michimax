@@ -64,7 +64,7 @@ export default async function TitlePage({ params }: Props) {
             <h2 id="titulo-reparto" className={styles.sectionTitle}>
               Reparto
             </h2>
-            <CastList starring={show.starring} />
+            <CastList starring={show.starring} slug={show.slug} title={show.title} />
           </section>
 
           <section aria-labelledby="titulo-fotogramas">
