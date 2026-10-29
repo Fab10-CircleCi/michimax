@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FeatureRequestCard } from "@/components/FeatureRequestCard";
+import { IdeasSection } from "@/components/IdeasSection";
 import { featureRequests } from "@/lib/feature-requests";
 import styles from "./page.module.css";
 
@@ -30,6 +31,8 @@ export default function SolicitudesPage() {
           </li>
         ))}
       </ul>
+
+      <IdeasSection />
     </div>
   );
 }

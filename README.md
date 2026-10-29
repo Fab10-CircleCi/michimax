@@ -3,7 +3,7 @@
 >
 > - **Viene de:** `Paso-01-comienzo` + las cuatro ramas `Paso-03-feature-…-FIXED` integradas.
 > - **Qué esperar en CircleCI:** los 4 jobs en verde.
-> - **Siguiente:** fin del taller. Compara esta rama con la tuya para ver cómo quedó cada funcionalidad.
+> - **Siguiente:** fin del taller. Compara esta rama con la tuya o sigue con las 20 «Ideas para seguir construyendo» al final de `/solicitudes`.
 > - **¿Te atrasaste?** Trae el resultado final a tu fork:
 >   ```bash
 >   git fetch https://github.com/Fab10-CircleCi/michimax.git Paso-04-todas-las-funcionalidades && git switch -C Paso-04-todas-las-funcionalidades FETCH_HEAD && git push -u origin Paso-04-todas-las-funcionalidades
