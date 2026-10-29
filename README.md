@@ -1,3 +1,15 @@
+<!-- paso-del-taller:inicio -->
+> **Paso 1 de 4 · Punto de partida** (`main` = `01-comienzo`)
+>
+> - **Viene de:** aquí empieza el taller.
+> - **Qué esperar en CircleCI:** los 4 jobs en verde.
+> - **Siguiente:** elige una solicitud en <http://localhost:3000/solicitudes>, pega su prompt en tu agente de IA y deja que suba la rama a tu fork → paso 2.
+> - **¿Te atrasaste?** Si aún no tienes fork, sigue «Taller: paso a paso» más abajo. Para volver al punto de partida:
+>   ```bash
+>   git fetch https://github.com/Fab10-CircleCi/michimax.git 01-comienzo && git switch -C 01-comienzo FETCH_HEAD && git push -u origin 01-comienzo
+>   ```
+<!-- paso-del-taller:fin -->
+
 # Michimax 🐾
 
 **Streaming felino en formato vertical.** Treinta series, películas, documentales y realities protagonizados por gatos, en diez categorías: de *The Midnight Prowler* a *The Crown Jewels*.
