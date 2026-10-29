@@ -1,3 +1,15 @@
+<!-- paso-del-taller:inicio -->
+> **Paso 3 de 4 · Galería del reparto · funcionalidad arreglada**
+>
+> - **Viene de:** `02-feature-02-galeria-BROKEN` + un commit «Arregla…»: el nombre va en texto oscuro sobre el dorado, es un `<h3>` en vez de `<h5>` y el detalle se abre con un botón real (también con teclado).
+> - **Qué esperar en CircleCI:** los 4 jobs en verde.
+> - **Siguiente:** prueba otra solicitud o mira el resultado final en `04-todas-las-funcionalidades` → paso 4.
+> - **¿Te atrasaste?** Trae esta rama a tu fork:
+>   ```bash
+>   git fetch https://github.com/Fab10-CircleCi/michimax.git 03-feature-02-galeria-FIXED && git switch -C 03-feature-02-galeria-FIXED FETCH_HEAD && git push -u origin 03-feature-02-galeria-FIXED
+>   ```
+<!-- paso-del-taller:fin -->
+
 # Michimax 🐾
 
 **Streaming felino en formato vertical.** Treinta series, películas, documentales y realities protagonizados por gatos, en diez categorías: de *The Midnight Prowler* a *The Crown Jewels*.
