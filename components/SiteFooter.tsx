@@ -1,9 +1,11 @@
+import { NewsletterForm } from "./NewsletterForm";
 import styles from "./SiteFooter.module.css";
 
 export function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className="container">
+        <NewsletterForm />
         <p className={styles.brand}>Michimax · Streaming felino en formato vertical</p>
         <p className={styles.note}>
           Plataforma ficticia creada para el taller de integración continua con CircleCI. Ningún gato fue
