@@ -1,0 +1,245 @@
+.wrapper {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.feed {
+  height: calc(100dvh - 65px);
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+
+.slide {
+  position: relative;
+  height: 100%;
+  scroll-snap-align: start;
+  background: #000;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #ff7eb3;
+  font-size: 96px;
+  transform: translate(-50%, -50%);
+  animation: burst 700ms ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes burst {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+}
+
+.progress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: rgb(255 255 255 / 25%);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-gold);
+}
+
+/* Fondo sólido: el texto sobre el video no se puede evaluar (ni leer bien) con un fondo en movimiento. */
+.overlay {
+  position: absolute;
+  right: 80px;
+  bottom: var(--space-6);
+  left: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.title {
+  margin-bottom: var(--space-1);
+  font-size: 1.5rem;
+}
+
+.episode {
+  margin-bottom: var(--space-2);
+  font-size: 0.875rem;
+}
+
+.link {
+  color: var(--color-gold);
+  font-weight: 700;
+}
+
+.actions {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.action {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 50%);
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.liked {
+  color: #ff7eb3;
+}
+
+.arrows {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .arrows {
+    position: absolute;
+    top: 50%;
+    right: -72px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transform: translateY(-50%);
+  }
+}
+
+.arrow {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.sheet {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-height: 60%;
+  padding: var(--space-4);
+  overflow-y: auto;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--color-surface);
+  transform: translateY(100%);
+  /* Cerrado queda oculto (no tapa el pie de página en celular); se oculta al terminar de bajar. */
+  visibility: hidden;
+  transition:
+    transform 250ms ease,
+    visibility 0s linear 250ms;
+}
+
+.sheetOpen {
+  transform: translateY(0);
+  visibility: visible;
+  transition: transform 250ms ease;
+}
+
+.sheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheetTitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: var(--color-text);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.comments {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.commentForm {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.commentInput {
+  flex: 1;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.send {
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.playback {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 55%);
+  color: #fff;
+  cursor: pointer;
+}
