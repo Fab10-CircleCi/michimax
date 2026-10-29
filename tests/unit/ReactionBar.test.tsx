@@ -17,13 +17,26 @@ describe("ReactionBar", () => {
     const user = userEvent.setup();
     render(<ReactionBar slug="meowcha" />);
     const inicial = getReacciones("meowcha").meEncanta;
-    const [meEncanta] = screen.getAllByRole("button");
+    const meEncanta = screen.getByRole("button", { name: "Me encanta" });
 
     await user.click(meEncanta);
     expect(screen.getByText(formatearContador(inicial + 1))).toBeInTheDocument();
+    expect(meEncanta).toHaveAttribute("aria-pressed", "true");
 
     await user.click(meEncanta);
     expect(screen.getByText(formatearContador(inicial))).toBeInTheDocument();
+  });
+});
+
+describe("ReactionBar accesible", () => {
+  it("cada botón tiene nombre y el grupo está etiquetado", () => {
+    render(<ReactionBar slug="the-midnight-prowler" />);
+
+    const grupo = screen.getByRole("group", { name: "Reacciones" });
+    expect(grupo).toBeInTheDocument();
+    for (const nombre of ["Me encanta", "Comentarios", "Compartir", "Mi lista"]) {
+      expect(screen.getByRole("button", { name: nombre })).toBeInTheDocument();
+    }
   });
 });
 

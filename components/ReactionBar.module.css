@@ -34,7 +34,8 @@
   padding: 2px var(--space-2);
   border-radius: var(--radius-pill);
   background: #2a1424;
-  color: #7a3b63;
+  /* El «vino» de marca (#7A3B63) no se lee sobre este fondo (2.15:1); el texto del sitio sí (17:1). */
+  color: var(--color-text);
   font-size: 12px;
   font-weight: 600;
 }
