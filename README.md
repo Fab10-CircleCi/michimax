@@ -1,3 +1,15 @@
+<!-- paso-del-taller:inicio -->
+> **Paso 3 de 4 · Feed «Para ti» · funcionalidad arreglada**
+>
+> - **Viene de:** `02-feature-04-parati-BROKEN` + un commit «Arregla…»: la página tiene `<h1>`, los botones y barras de progreso tienen nombre, cada clip se puede pausar y el panel de comentarios tiene etiqueta y manejo de foco.
+> - **Qué esperar en CircleCI:** los 4 jobs en verde.
+> - **Siguiente:** prueba otra solicitud o mira el resultado final en `04-todas-las-funcionalidades` → paso 4.
+> - **¿Te atrasaste?** Trae esta rama a tu fork:
+>   ```bash
+>   git fetch https://github.com/Fab10-CircleCi/michimax.git 03-feature-04-parati-FIXED && git switch -C 03-feature-04-parati-FIXED FETCH_HEAD && git push -u origin 03-feature-04-parati-FIXED
+>   ```
+<!-- paso-del-taller:fin -->
+
 # Michimax 🐾
 
 **Streaming felino en formato vertical.** Treinta series, películas, documentales y realities protagonizados por gatos, en diez categorías: de *The Midnight Prowler* a *The Crown Jewels*.
