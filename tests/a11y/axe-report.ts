@@ -35,8 +35,10 @@ function plural(count: number, singular: string, pluralForm: string): string {
 type RuleGroup = {
   violation: AxeViolation;
   pages: string[];
-  nodes: AxeNode[];
+  nodes: { node: AxeNode; page: string }[];
 };
+
+export const REPRODUCE_COMMAND = "npm run test:a11y";
 
 /** Agrupa por regla: la misma violación en varias páginas se reporta una sola vez. */
 function groupByRule(results: PageViolations[]): RuleGroup[] {
@@ -48,8 +50,8 @@ function groupByRule(results: PageViolations[]): RuleGroup[] {
       if (!group.pages.includes(page)) group.pages.push(page);
       for (const node of violation.nodes) {
         const key = `${formatTarget(node.target)}|${node.html}`;
-        if (!group.nodes.some((known) => `${formatTarget(known.target)}|${known.html}` === key)) {
-          group.nodes.push(node);
+        if (!group.nodes.some((known) => `${formatTarget(known.node.target)}|${known.node.html}` === key)) {
+          group.nodes.push({ node, page });
         }
       }
       groups.set(violation.id, group);
@@ -61,11 +63,15 @@ function groupByRule(results: PageViolations[]): RuleGroup[] {
 
 function formatGroup({ violation, pages, nodes }: RuleGroup, index: number): string {
   const shown = nodes.slice(0, MAX_NODES_PER_RULE);
-  const summaries = new Set(shown.map((node) => node.failureSummary ?? ""));
+  const summaries = new Set(shown.map(({ node }) => node.failureSummary ?? ""));
   const sharedSummary = summaries.size === 1 ? [...summaries][0] : null;
 
-  const nodeLines = shown.map((node) => {
-    const lines = [`• Selector: ${formatTarget(node.target)}`, `  HTML: ${truncate(node.html, MAX_HTML_LENGTH)}`];
+  const nodeLines = shown.map(({ node, page }) => {
+    const lines = [
+      `• Página: ${page}`,
+      `  Selector: ${formatTarget(node.target)}`,
+      `  HTML: ${truncate(node.html, MAX_HTML_LENGTH)}`,
+    ];
     if (!sharedSummary) {
       lines.push("  Cómo arreglarlo:", indent(node.failureSummary ?? "", 4));
     }
@@ -93,5 +99,18 @@ export function formatReport(results: PageViolations[], context: string): string
     `axe-core encontró ${plural(groups.length, "regla", "reglas")} con violaciones de accesibilidad ` +
     `en ${plural(failing.length, "página", "páginas")} (${context}).`;
 
-  return [header, ...groups.map(formatGroup)].join("\n\n");
+  const footer = `Reprodúcelo localmente con: ${REPRODUCE_COMMAND}`;
+  return [header, ...groups.map(formatGroup), footer].join("\n\n");
+}
+
+/** Reglas que axe no pudo decidir (por ejemplo, texto sobre video o capas encimadas). No bloquean. */
+export function summarizeIncomplete(results: { page: string; incomplete: AxeViolation[] }[]): string | null {
+  const counts = new Map<string, number>();
+  for (const { incomplete } of results) {
+    for (const rule of incomplete) {
+      counts.set(rule.id, (counts.get(rule.id) ?? 0) + rule.nodes.length);
+    }
+  }
+  if (counts.size === 0) return null;
+  return [...counts].map(([rule, count]) => `${rule} (${count})`).join(", ");
 }

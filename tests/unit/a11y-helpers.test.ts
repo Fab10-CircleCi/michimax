@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { formatReport, type AxeViolation } from "../a11y/axe-report";
+import { formatReport, summarizeIncomplete, type AxeViolation } from "../a11y/axe-report";
 import { discoverStaticRoutes, toInternalPage } from "../a11y/routes";
 
 function page(dir: string, ...segments: string[]) {
@@ -66,6 +66,7 @@ describe("formatReport", () => {
     expect(report).toContain('HTML: <span class="contador"> 1.2k </span>');
     expect(report).toContain("insufficient color contrast of 2.15");
     expect(report).toContain("https://dequeuniversity.com/rules/axe/4.14/color-contrast");
+    expect(report).toContain("Reprodúcelo localmente con: npm run test:a11y");
   });
 
   it("agrupa la misma violación de varias páginas en una sola entrada", () => {
@@ -81,5 +82,15 @@ describe("formatReport", () => {
     expect(report).toContain("Páginas: /telenovelas/michimar, /telenovelas/rubi-la-siamesa");
     expect(report).toContain("Elementos afectados: 1 distintos");
     expect(report.match(/Selector:/g)).toHaveLength(1);
+    expect(report).toContain("• Página: /telenovelas/michimar");
+  });
+});
+
+describe("summarizeIncomplete", () => {
+  it("cuenta los elementos que axe no pudo decidir por regla", () => {
+    const incomplete = [{ id: "color-contrast", nodes: [{}, {}] }] as unknown as AxeViolation[];
+
+    expect(summarizeIncomplete([{ page: "/", incomplete }])).toBe("color-contrast (2)");
+    expect(summarizeIncomplete([{ page: "/", incomplete: [] }])).toBeNull();
   });
 });

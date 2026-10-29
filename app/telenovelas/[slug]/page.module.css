@@ -1,22 +1,37 @@
 .layout {
   display: grid;
-  gap: var(--space-8);
+  gap: var(--space-6);
   padding-top: var(--space-8);
 }
 
+/* En escritorio el reproductor va a la izquierda; el orden del DOM sigue siendo título → video → detalles. */
 @media (min-width: 900px) {
   .layout {
     grid-template-columns: 380px minmax(0, 1fr);
+    grid-template-areas:
+      "player header"
+      "player info";
+    grid-template-rows: auto 1fr;
     align-items: start;
-    gap: var(--space-12);
+    column-gap: var(--space-12);
+  }
+
+  .header {
+    grid-area: header;
   }
 
   .playerColumn {
+    grid-area: player;
     position: sticky;
     top: 88px;
   }
+
+  .info {
+    grid-area: info;
+  }
 }
 
+.header,
 .info {
   min-width: 0;
 }

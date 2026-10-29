@@ -129,6 +129,13 @@ export const featureRequests: FeatureRequest[] = [
   },
 ];
 
+/** Rama propia del respaldo: no choca con la rama feat/ que haya creado el agente. */
+export function fallbackLocalBranch(request: FeatureRequest): string {
+  return `respaldo/${request.id}`;
+}
+
+/** Se puede repetir sin error: `switch -C` recrea la rama local con el contenido del respaldo. */
 export function fallbackCommand(request: FeatureRequest): string {
-  return `git fetch ${UPSTREAM_REPO_URL}.git ${request.fallbackBranch} && git switch -c ${request.branch} FETCH_HEAD && git push -u origin ${request.branch}`;
+  const branch = fallbackLocalBranch(request);
+  return `git fetch ${UPSTREAM_REPO_URL}.git ${request.fallbackBranch} && git switch -C ${branch} FETCH_HEAD && git push -u origin ${branch}`;
 }

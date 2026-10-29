@@ -21,11 +21,11 @@ describe("solicitudes de funcionalidades", () => {
     }
   });
 
-  it("el comando de respaldo trae la rama del repositorio original", () => {
+  it("el comando de respaldo usa su propia rama para no chocar con la del agente", () => {
     const [first] = featureRequests;
     expect(fallbackCommand(first)).toBe(
       `git fetch ${UPSTREAM_REPO_URL}.git fallback/01-reacciones && ` +
-        "git switch -c feat/reacciones FETCH_HEAD && git push -u origin feat/reacciones",
+        "git switch -C respaldo/reacciones FETCH_HEAD && git push -u origin respaldo/reacciones",
     );
   });
 });

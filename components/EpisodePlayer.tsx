@@ -19,7 +19,7 @@ export function EpisodePlayer({ telenovela }: { telenovela: Telenovela }) {
           playsInline
           preload="metadata"
           poster={posterPath(telenovela.slug, current.number)}
-          aria-describedby="capitulo-actual"
+          aria-label={`${telenovela.title}, capítulo ${current.number}: ${current.title}`}
         >
           <source src={videoPath(telenovela.slug, current.number)} type="video/mp4" />
           <track
@@ -33,7 +33,7 @@ export function EpisodePlayer({ telenovela }: { telenovela: Telenovela }) {
         </video>
       </div>
 
-      <p id="capitulo-actual" className={styles.now} aria-live="polite">
+      <p className={styles.now} aria-live="polite">
         Reproduciendo: capítulo {current.number}, «{current.title}»
       </p>
 

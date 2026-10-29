@@ -1,4 +1,4 @@
-import { fallbackCommand, type FeatureRequest } from "@/lib/feature-requests";
+import { fallbackCommand, fallbackLocalBranch, type FeatureRequest } from "@/lib/feature-requests";
 import { CopyButton } from "./CopyButton";
 import styles from "./FeatureRequestCard.module.css";
 
@@ -24,7 +24,7 @@ export function FeatureRequestCard({ request }: { request: FeatureRequest }) {
       <div className={styles.fallback}>
         <h3 className={styles.fallbackTitle}>¿Sin tiempo? Usa la rama de respaldo</h3>
         <p className={styles.fallbackText}>
-          Trae la versión ya construida a tu fork y súbela como la rama <code>{request.branch}</code>:
+          Trae la versión ya construida y súbela a tu fork como la rama <code>{fallbackLocalBranch(request)}</code>:
         </p>
         <pre className={styles.command}>
           <code>{command}</code>

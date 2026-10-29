@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = 3000;
+// Puerto distinto al de `npm run dev` (3000) para no probar el servidor de desarrollo por accidente.
+const PORT = 3100;
 const isCI = Boolean(process.env.CI);
 
 export default defineConfig({
@@ -22,11 +23,11 @@ export default defineConfig({
     { name: "movil", use: { ...devices["Pixel 7"] } },
     { name: "escritorio", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } } },
   ],
-  // Se prueba la compilación de producción: ejecuta `npm run build` antes.
+  // Siempre se prueba la compilación de producción. En CI el paso anterior ya compiló.
   webServer: {
-    command: `npm run start -- --port ${PORT}`,
+    command: isCI ? `npm run start -- --port ${PORT}` : `npm run build && npm run start -- --port ${PORT}`,
     url: `http://localhost:${PORT}`,
-    reuseExistingServer: !isCI,
-    timeout: 60_000,
+    reuseExistingServer: false,
+    timeout: 180_000,
   },
 });

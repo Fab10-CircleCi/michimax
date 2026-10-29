@@ -32,11 +32,7 @@ export default async function TelenovelaPage({ params }: Props) {
 
   return (
     <div className={`container ${styles.layout}`}>
-      <section className={styles.playerColumn} aria-label="Reproductor">
-        <EpisodePlayer telenovela={telenovela} />
-      </section>
-
-      <div className={styles.info}>
+      <header className={styles.header}>
         <p className={styles.back}>
           <Link href="/">← Volver al catálogo</Link>
         </p>
@@ -44,6 +40,13 @@ export default async function TelenovelaPage({ params }: Props) {
         <p className={styles.meta}>
           {telenovela.genre} · {telenovela.year} · {telenovela.episodes.length} capítulos
         </p>
+      </header>
+
+      <section className={styles.playerColumn} aria-label="Reproductor">
+        <EpisodePlayer telenovela={telenovela} />
+      </section>
+
+      <div className={styles.info}>
         <p className={styles.tagline}>{telenovela.tagline}</p>
         <p>{telenovela.synopsis}</p>
 
