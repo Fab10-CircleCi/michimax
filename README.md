@@ -1,12 +1,12 @@
 <!-- paso-del-taller:inicio -->
 > **Paso 3 de 4 · Boletín «El Chisme Felino» · funcionalidad arreglada**
 >
-> - **Viene de:** `02-feature-03-boletin-BROKEN` + un commit «Arregla…»: los tres campos tienen etiqueta visible, el error y la bienvenida se anuncian y el texto legal usa el color secundario del sitio.
+> - **Viene de:** `Paso-02-feature-03-boletin-BROKEN` + un commit «Arregla…»: los tres campos tienen etiqueta visible, el error y la bienvenida se anuncian y el texto legal usa el color secundario del sitio.
 > - **Qué esperar en CircleCI:** los 4 jobs en verde.
-> - **Siguiente:** prueba otra solicitud o mira el resultado final en `04-todas-las-funcionalidades` → paso 4.
+> - **Siguiente:** prueba otra solicitud o mira el resultado final en `Paso-04-todas-las-funcionalidades` → paso 4.
 > - **¿Te atrasaste?** Trae esta rama a tu fork:
 >   ```bash
->   git fetch https://github.com/Fab10-CircleCi/michimax.git 03-feature-03-boletin-FIXED && git switch -C 03-feature-03-boletin-FIXED FETCH_HEAD && git push -u origin 03-feature-03-boletin-FIXED
+>   git fetch https://github.com/Fab10-CircleCi/michimax.git Paso-03-feature-03-boletin-FIXED && git switch -C Paso-03-feature-03-boletin-FIXED FETCH_HEAD && git push -u origin Paso-03-feature-03-boletin-FIXED
 >   ```
 <!-- paso-del-taller:fin -->
 
