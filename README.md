@@ -1,3 +1,15 @@
+<!-- paso-del-taller:inicio -->
+> **Paso 4 de 4 · Todas las funcionalidades, arregladas**
+>
+> - **Viene de:** `01-comienzo` + las cuatro ramas `03-feature-…-FIXED` integradas.
+> - **Qué esperar en CircleCI:** los 4 jobs en verde.
+> - **Siguiente:** fin del taller. Compara esta rama con la tuya para ver cómo quedó cada funcionalidad.
+> - **¿Te atrasaste?** Trae el resultado final a tu fork:
+>   ```bash
+>   git fetch https://github.com/Fab10-CircleCi/michimax.git 04-todas-las-funcionalidades && git switch -C 04-todas-las-funcionalidades FETCH_HEAD && git push -u origin 04-todas-las-funcionalidades
+>   ```
+<!-- paso-del-taller:fin -->
+
 # Michimax 🐾
 
 **Streaming felino en formato vertical.** Treinta series, películas, documentales y realities protagonizados por gatos, en diez categorías: de *The Midnight Prowler* a *The Crown Jewels*.
