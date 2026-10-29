@@ -24,15 +24,15 @@ describe("solicitudes de funcionalidades", () => {
   it("las ramas de respaldo siguen el orden del taller", () => {
     for (const request of featureRequests) {
       const n = String(request.number).padStart(2, "0");
-      expect(request.brokenBranch).toMatch(new RegExp(`^02-feature-${n}-[a-z]+-BROKEN$`));
-      expect(request.fixedBranch).toBe(request.brokenBranch.replace(/^02/, "03").replace(/BROKEN$/, "FIXED"));
+      expect(request.brokenBranch).toMatch(new RegExp(`^Paso-02-feature-${n}-[a-z]+-BROKEN$`));
+      expect(request.fixedBranch).toBe(request.brokenBranch.replace(/^Paso-02/, "Paso-03").replace(/BROKEN$/, "FIXED"));
     }
   });
 
   it("el comando de respaldo sube la rama a tu fork con el mismo nombre", () => {
-    expect(branchCommand("02-feature-01-reacciones-BROKEN")).toBe(
-      `git fetch ${UPSTREAM_REPO_URL}.git 02-feature-01-reacciones-BROKEN && ` +
-        "git switch -C 02-feature-01-reacciones-BROKEN FETCH_HEAD && git push -u origin 02-feature-01-reacciones-BROKEN",
+    expect(branchCommand("Paso-02-feature-01-reacciones-BROKEN")).toBe(
+      `git fetch ${UPSTREAM_REPO_URL}.git Paso-02-feature-01-reacciones-BROKEN && ` +
+        "git switch -C Paso-02-feature-01-reacciones-BROKEN FETCH_HEAD && git push -u origin Paso-02-feature-01-reacciones-BROKEN",
     );
   });
 });
