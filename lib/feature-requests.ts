@@ -76,7 +76,7 @@ export const featureRequests: FeatureRequest[] = [
         "Usa para el nombre el estilo «Título 5» del manual de marca, es decir, una etiqueta <h5>.",
         "Debajo del nombre, el rol y la raza en texto pequeño.",
         "Cada tarjeta tiene un botón «Seguir» que cambia a «Siguiendo» al pulsarlo; guarda los gatos seguidos en localStorage.",
-        "Al tocar la tarjeta se voltea (efecto flip) para mostrar la biografía del gato.",
+        "Al tocar la tarjeta se despliega la biografía del gato debajo de la foto; al tocarla otra vez se oculta.",
       ],
       "feat/galeria-reparto",
     ),
