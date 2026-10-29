@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.button {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary {
+  border: 2px solid var(--color-gold);
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+}
+
+.secondary {
+  border: 2px solid var(--color-text-muted);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.button:hover {
+  filter: brightness(1.08);
+}
+
+.status {
+  color: var(--color-gold);
+  font-weight: 600;
+}

@@ -1,0 +1,85 @@
+version: 2.1
+
+# Pipeline de Michimax: cuatro trabajos en paralelo.
+# Ninguno depende de otro, así que una falla de lint no oculta los resultados de accesibilidad.
+
+executors:
+  node:
+    docker:
+      - image: cimg/node:22.23
+    resource_class: medium
+  playwright:
+    # Debe coincidir con la versión de @playwright/test en package.json.
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.64.1-noble
+    resource_class: medium
+
+commands:
+  install-dependencies:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - npm-v1-{{ checksum "package-lock.json" }}
+            - npm-v1-
+      - run:
+          name: Instalar dependencias
+          command: npm ci
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+
+jobs:
+  lint:
+    executor: node
+    steps:
+      - install-dependencies
+      - run:
+          name: ESLint
+          command: npm run lint
+
+  typecheck:
+    executor: node
+    steps:
+      - install-dependencies
+      - run:
+          name: TypeScript
+          command: npm run typecheck
+
+  unit-tests:
+    executor: node
+    steps:
+      - install-dependencies
+      - run:
+          name: Pruebas unitarias (Vitest)
+          command: npx vitest run --reporter=default --reporter=junit --outputFile.junit=reports/unit/junit.xml
+      - store_test_results:
+          path: reports/unit
+
+  accessibility:
+    executor: playwright
+    environment:
+      CI: "true"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - install-dependencies
+      - run:
+          name: Compilar sitio (next build)
+          command: npm run build
+      - run:
+          name: Validar accesibilidad con axe
+          command: npm run test:a11y
+      - store_test_results:
+          path: reports/a11y
+      - store_artifacts:
+          path: playwright-report
+          destination: reporte-accesibilidad
+
+workflows:
+  ci:
+    jobs:
+      - lint
+      - typecheck
+      - unit-tests
+      - accessibility

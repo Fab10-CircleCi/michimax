@@ -1,0 +1,18 @@
+# dependencias
+/node_modules
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# pruebas
+/reports/
+/playwright-report/
+/test-results/
+/blob-report/
+
+# varios
+.DS_Store
+*.tsbuildinfo
+.env*.local
