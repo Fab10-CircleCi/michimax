@@ -15,7 +15,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:a11y": "playwright test",
-    "media": "node scripts/optimize-media.ts"
+    "media": "node scripts/optimize-media.ts",
+    "brand": "node scripts/brand-assets.ts"
   },
   "dependencies": {
     "next": "16.4.3",
