@@ -1,4 +1,7 @@
 .gallery {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
@@ -15,7 +18,6 @@
   overflow: hidden;
   border-radius: var(--radius-md);
   background: var(--color-surface);
-  cursor: pointer;
 }
 
 .photo {
@@ -26,16 +28,22 @@
 }
 
 .label {
-  padding: var(--space-2) var(--space-3);
+  margin: 0;
   background: #f5c518;
 }
 
-.name {
-  margin: 0;
-  color: #fff;
+/* Texto oscuro sobre el dorado de marca: el blanco daba 1.63:1, este da más de 11:1. */
+.toggle {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  background: transparent;
+  color: var(--color-on-gold);
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
+  text-align: left;
+  cursor: pointer;
 }
 
 .bio {

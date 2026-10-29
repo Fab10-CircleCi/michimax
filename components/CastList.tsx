@@ -49,33 +49,42 @@ export function CastList({ starring, slug, title }: Props) {
   }
 
   return (
-    <div className={styles.gallery}>
+    <ul className={styles.gallery}>
       {starring.map((nombre, index) => {
         const abierta = abiertas.includes(nombre);
         const siguiendo = seguidos.includes(nombre);
         const foto = stillPath(slug, ((index % 3) + 1) as 1 | 2 | 3);
+        const detalleId = `detalle-${slug}-${index}`;
 
         return (
-          <div key={nombre} className={styles.card} onClick={() => alternarDetalle(nombre)}>
+          <li key={nombre} className={styles.card}>
             <div className={styles.photo} style={{ backgroundImage: `url(${foto})` }}>
               <button
                 type="button"
                 className={`${styles.follow} ${siguiendo ? styles.following : ""}`}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  alternarSeguir(nombre);
-                }}
+                aria-label={`${siguiendo ? "Siguiendo" : "Seguir"} a ${nombre}`}
+                onClick={() => alternarSeguir(nombre)}
               >
                 {siguiendo ? "Siguiendo" : "Seguir"}
               </button>
             </div>
-            <div className={styles.label}>
-              <h5 className={styles.name}>{nombre}</h5>
-            </div>
-            {abierta && <p className={styles.bio}>Estrella de {title}</p>}
-          </div>
+            <h3 className={styles.label}>
+              <button
+                type="button"
+                className={styles.toggle}
+                aria-expanded={abierta}
+                aria-controls={detalleId}
+                onClick={() => alternarDetalle(nombre)}
+              >
+                {nombre}
+              </button>
+            </h3>
+            <p id={detalleId} className={styles.bio} hidden={!abierta}>
+              Estrella de {title}
+            </p>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 }

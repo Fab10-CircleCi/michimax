@@ -21,16 +21,16 @@ describe("CastList", () => {
     for (const nombre of show.starring) {
       expect(screen.getByText(nombre)).toBeInTheDocument();
     }
-    expect(screen.getAllByRole("button", { name: "Seguir" })).toHaveLength(show.starring.length);
+    expect(screen.getAllByRole("button", { name: /^Seguir a / })).toHaveLength(show.starring.length);
   });
 
   it("sigue a un gato y lo guarda en localStorage", async () => {
     const user = userEvent.setup();
     renderGallery();
 
-    await user.click(screen.getAllByRole("button", { name: "Seguir" })[0]);
+    await user.click(screen.getAllByRole("button", { name: /^Seguir a / })[0]);
 
-    expect(screen.getByRole("button", { name: "Siguiendo" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: `Siguiendo a ${show.starring[0]}` })).toBeInTheDocument();
     expect(JSON.parse(localStorage.getItem("michimax:siguiendo") ?? "[]")).toEqual([show.starring[0]]);
   });
 
@@ -38,10 +38,14 @@ describe("CastList", () => {
     const user = userEvent.setup();
     renderGallery();
 
-    await user.click(screen.getByText(show.starring[0]));
-    expect(screen.getByText(`Estrella de ${show.title}`)).toBeInTheDocument();
+    const toggle = screen.getByRole("button", { name: show.starring[0] });
 
-    await user.click(screen.getByText(show.starring[0]));
-    expect(screen.queryByText(`Estrella de ${show.title}`)).not.toBeInTheDocument();
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getAllByText(`Estrella de ${show.title}`)[0]).toBeVisible();
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getAllByText(`Estrella de ${show.title}`)[0]).not.toBeVisible();
   });
 });
