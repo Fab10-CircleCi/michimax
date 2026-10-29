@@ -16,3 +16,6 @@ next-env.d.ts
 .DS_Store
 *.tsbuildinfo
 .env*.local
+
+# contenido fuente sin optimizar (no se versiona)
+/netflix-CATalog-human/

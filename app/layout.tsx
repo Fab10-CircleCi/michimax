@@ -5,10 +5,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Michimax · Telenovelas felinas",
+    default: "Michimax · Streaming felino",
     template: "%s · Michimax",
   },
-  description: "El streaming de telenovelas felinas en formato vertical. Drama de siete vidas.",
+  description: "Series, películas y documentales felinos en formato vertical. Treinta títulos, siete vidas.",
 };
 
 export const viewport: Viewport = {

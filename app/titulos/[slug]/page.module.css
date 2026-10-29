@@ -1,0 +1,78 @@
+.layout {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-8) 0 var(--space-8);
+}
+
+/* En escritorio el reproductor va a la izquierda; el orden del DOM sigue siendo título → video → detalles. */
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: 380px minmax(0, 1fr);
+    grid-template-areas:
+      "player header"
+      "player info";
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    column-gap: var(--space-12);
+  }
+
+  .header {
+    grid-area: header;
+  }
+
+  .playerColumn {
+    grid-area: player;
+    position: sticky;
+    top: 88px;
+  }
+
+  .info {
+    grid-area: info;
+  }
+}
+
+.header,
+.info {
+  min-width: 0;
+}
+
+.back {
+  margin-bottom: var(--space-4);
+  font-weight: 600;
+}
+
+.kicker {
+  margin-bottom: var(--space-2);
+  color: var(--color-gold);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-style: italic;
+}
+
+.tagline {
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-style: italic;
+}
+
+.tags {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.tagsLabel {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.sectionTitle {
+  margin-top: var(--space-8);
+  font-size: 1.5rem;
+}

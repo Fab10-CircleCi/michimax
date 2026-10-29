@@ -1,0 +1,31 @@
+.row {
+  margin-bottom: var(--space-8);
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+/* En celular la fila se desliza de lado; las tarjetas son enlaces, así que el teclado también la recorre. */
+.list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(150px, 42%);
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-1) var(--space-1) var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+}
+
+.item {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 720px) {
+  .list {
+    grid-auto-columns: minmax(180px, 220px);
+    gap: var(--space-4);
+  }
+}

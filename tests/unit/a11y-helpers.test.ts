@@ -17,7 +17,7 @@ describe("discoverStaticRoutes", () => {
     page(app);
     page(app, "solicitudes");
     page(app, "(marketing)", "acerca");
-    page(app, "telenovelas", "[slug]");
+    page(app, "titulos", "[slug]");
     page(app, "@modal", "login");
     page(app, "_privado");
 
@@ -29,14 +29,14 @@ describe("toInternalPage", () => {
   const origin = "http://localhost:3000";
 
   it("normaliza enlaces internos", () => {
-    expect(toInternalPage("/telenovelas/michimar#reparto", origin)).toBe("/telenovelas/michimar");
+    expect(toInternalPage("/titulos/the-midnight-prowler#reparto", origin)).toBe("/titulos/the-midnight-prowler");
     expect(toInternalPage("/solicitudes/?x=1", origin)).toBe("/solicitudes");
     expect(toInternalPage("http://localhost:3000/", origin)).toBe("/");
   });
 
   it("descarta enlaces externos y archivos", () => {
     expect(toInternalPage("https://circleci.com", origin)).toBeNull();
-    expect(toInternalPage("/videos/michimar-1.mp4", origin)).toBeNull();
+    expect(toInternalPage("/titulos/meowcha/clip.mp4", origin)).toBeNull();
     expect(toInternalPage("/_next/static/chunk", origin)).toBeNull();
   });
 });
@@ -57,11 +57,11 @@ describe("formatReport", () => {
   } as unknown as AxeViolation;
 
   it("resume regla, páginas, selector, HTML y cómo arreglarlo", () => {
-    const report = formatReport([{ page: "/telenovelas/michimar", violations: [violation] }], "movil");
+    const report = formatReport([{ page: "/titulos/the-midnight-prowler", violations: [violation] }], "movil");
 
     expect(report).toContain("1 regla con violaciones de accesibilidad en 1 página (movil)");
     expect(report).toContain("[color-contrast] impacto: serious");
-    expect(report).toContain("Páginas: /telenovelas/michimar");
+    expect(report).toContain("Páginas: /titulos/the-midnight-prowler");
     expect(report).toContain("Selector: .contador");
     expect(report).toContain('HTML: <span class="contador"> 1.2k </span>');
     expect(report).toContain("insufficient color contrast of 2.15");
@@ -72,17 +72,17 @@ describe("formatReport", () => {
   it("agrupa la misma violación de varias páginas en una sola entrada", () => {
     const report = formatReport(
       [
-        { page: "/telenovelas/michimar", violations: [violation] },
-        { page: "/telenovelas/rubi-la-siamesa", violations: [violation] },
+        { page: "/titulos/the-midnight-prowler", violations: [violation] },
+        { page: "/titulos/meowcha", violations: [violation] },
       ],
       "escritorio",
     );
 
     expect(report).toContain("1 regla con violaciones de accesibilidad en 2 páginas");
-    expect(report).toContain("Páginas: /telenovelas/michimar, /telenovelas/rubi-la-siamesa");
+    expect(report).toContain("Páginas: /titulos/the-midnight-prowler, /titulos/meowcha");
     expect(report).toContain("Elementos afectados: 1 distintos");
     expect(report.match(/Selector:/g)).toHaveLength(1);
-    expect(report).toContain("• Página: /telenovelas/michimar");
+    expect(report).toContain("• Página: /titulos/the-midnight-prowler");
   });
 });
 

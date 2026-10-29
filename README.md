@@ -1,8 +1,8 @@
 # Michimax 🐾
 
-**El streaming de telenovelas felinas en formato vertical.** Capítulos cortitos, villanas con bigotes y amores imposibles entre croquetas.
+**Streaming felino en formato vertical.** Treinta series, películas, documentales y realities protagonizados por gatos, en diez categorías: de *The Midnight Prowler* a *The Crown Jewels*.
 
-Michimax es un sitio ficticio creado para el taller de integración continua con CircleCI. Ningún gato fue maltratado durante su producción.
+Michimax es una plataforma ficticia creada para el taller de integración continua con CircleCI. Ningún gato fue maltratado durante su producción.
 
 ## Requisitos
 
@@ -29,6 +29,7 @@ Abre <http://localhost:3000>. Las funcionalidades para construir durante el tall
 | `npm run lint` | ESLint |
 | `npm run typecheck` | Revisión de tipos con TypeScript |
 | `npm test` | Pruebas unitarias con Vitest |
+| `npm run media` | Optimiza el material original del catálogo (ver abajo) |
 
 ## Taller: paso a paso
 
@@ -45,17 +46,24 @@ Abre <http://localhost:3000>. Las funcionalidades para construir durante el tall
 
 ```
 app/                  Páginas (App Router)
-  telenovelas/[slug]/ Detalle con el reproductor vertical
+  page.tsx            Portada: título destacado y una fila por categoría
+  titulos/[slug]/     Página de cada título con el reproductor vertical
   solicitudes/        Funcionalidades para el taller
 components/           Componentes con su CSS Module
-lib/                  Datos y utilidades
-public/videos/        Capítulos (mp4 9:16) y subtítulos (WebVTT)
-public/posters/       Pósters de cada capítulo
+lib/catalog.ts        Los 30 títulos y sus 10 categorías
+lib/                  Otras utilidades
+public/titulos/       Clip (mp4 9:16, sin audio) y tres fotogramas (WebP) por título
 tests/unit/           Pruebas unitarias
-scripts/              Generador de videos y pósters
+scripts/              Optimizador del material del catálogo
 ```
+
+## El catálogo
+
+- Cada título tiene una sinopsis, su reparto, un clip vertical de 6 segundos y tres fotogramas. Los textos están en español de México; los nombres de los títulos van en inglés.
+- Los clips no tienen audio: cada uno trae una descripción en texto y cada fotograma su texto alternativo, en `lib/catalog.ts`.
+- Las imágenes y los clips se generaron con IA. Año, clasificación, porcentaje de coincidencia y reparto son inventados.
 
 ## Notas
 
 - **Agregar dependencias:** npm 10.9 (el que trae Node 22) falla al resolver algunas dependencias de este proyecto. Usa `npx npm@11 install <paquete>`. `npm ci` funciona con cualquier versión.
-- **Regenerar los videos:** `npm run media` (requiere `ffmpeg` y `npx playwright install chromium`).
+- **Material original:** las imágenes PNG y los clips sin comprimir (~340 MB) no se versionan. Para regenerar `public/titulos/`, coloca la carpeta original (una subcarpeta `NN-slug/` por título) en la raíz y corre `npm run media -- <carpeta>`. Requiere `ffmpeg`.

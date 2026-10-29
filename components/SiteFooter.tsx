@@ -4,10 +4,10 @@ export function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className="container">
-        <p className={styles.brand}>Michimax · Telenovelas felinas en formato vertical</p>
+        <p className={styles.brand}>Michimax · Streaming felino en formato vertical</p>
         <p className={styles.note}>
-          Sitio ficticio creado para el taller de integración continua con CircleCI. Ningún gato fue
-          maltratado durante la producción de estas telenovelas.
+          Plataforma ficticia creada para el taller de integración continua con CircleCI. Ningún gato fue
+          maltratado durante la producción de estos títulos.
         </p>
       </div>
     </footer>
