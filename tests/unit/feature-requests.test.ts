@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { UPSTREAM_REPO_URL, fallbackCommand, featureRequests } from "@/lib/feature-requests";
+import { UPSTREAM_REPO_URL, branchCommand, featureRequests } from "@/lib/feature-requests";
 
 describe("solicitudes de funcionalidades", () => {
   it("hay cuatro solicitudes numeradas en orden", () => {
@@ -8,9 +8,9 @@ describe("solicitudes de funcionalidades", () => {
 
   it("cada solicitud tiene ramas únicas", () => {
     const branches = featureRequests.map((request) => request.branch);
-    const fallbacks = featureRequests.map((request) => request.fallbackBranch);
+    const respaldo = featureRequests.flatMap((request) => [request.brokenBranch, request.fixedBranch]);
     expect(new Set(branches).size).toBe(featureRequests.length);
-    expect(new Set(fallbacks).size).toBe(featureRequests.length);
+    expect(new Set(respaldo).size).toBe(featureRequests.length * 2);
   });
 
   it("cada prompt incluye el contexto, los pasos finales y su rama", () => {
@@ -21,11 +21,18 @@ describe("solicitudes de funcionalidades", () => {
     }
   });
 
-  it("el comando de respaldo usa su propia rama para no chocar con la del agente", () => {
-    const [first] = featureRequests;
-    expect(fallbackCommand(first)).toBe(
-      `git fetch ${UPSTREAM_REPO_URL}.git fallback/01-reacciones && ` +
-        "git switch -C respaldo/reacciones FETCH_HEAD && git push -u origin respaldo/reacciones",
+  it("las ramas de respaldo siguen el orden del taller", () => {
+    for (const request of featureRequests) {
+      const n = String(request.number).padStart(2, "0");
+      expect(request.brokenBranch).toMatch(new RegExp(`^02-feature-${n}-[a-z]+-BROKEN$`));
+      expect(request.fixedBranch).toBe(request.brokenBranch.replace(/^02/, "03").replace(/BROKEN$/, "FIXED"));
+    }
+  });
+
+  it("el comando de respaldo sube la rama a tu fork con el mismo nombre", () => {
+    expect(branchCommand("02-feature-01-reacciones-BROKEN")).toBe(
+      `git fetch ${UPSTREAM_REPO_URL}.git 02-feature-01-reacciones-BROKEN && ` +
+        "git switch -C 02-feature-01-reacciones-BROKEN FETCH_HEAD && git push -u origin 02-feature-01-reacciones-BROKEN",
     );
   });
 });
