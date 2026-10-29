@@ -30,6 +30,7 @@ Abre <http://localhost:3000>. Las funcionalidades para construir durante el tall
 | `npm run typecheck` | Revisión de tipos con TypeScript |
 | `npm test` | Pruebas unitarias con Vitest |
 | `npm run media` | Optimiza el material original del catálogo (ver abajo) |
+| `npm run brand` | Genera los íconos y la imagen para compartir a partir de los logos originales |
 
 ## Taller: paso a paso
 
@@ -66,4 +67,5 @@ scripts/              Optimizador del material del catálogo
 ## Notas
 
 - **Agregar dependencias:** npm 10.9 (el que trae Node 22) falla al resolver algunas dependencias de este proyecto. Usa `npx npm@11 install <paquete>`. `npm ci` funciona con cualquier versión.
+- **Logos:** los originales (generados con IA) no se versionan. `npm run brand -- <carpeta>` genera `app/icon.png`, `app/apple-icon.png`, `app/opengraph-image.jpg` y `public/brand/michimax-simbolo.png`.
 - **Material original:** las imágenes PNG y los clips sin comprimir (~340 MB) no se versionan. Para regenerar `public/titulos/`, coloca la carpeta original (una subcarpeta `NN-slug/` por título) en la raíz y corre `npm run media -- <carpeta>`. Requiere `ffmpeg`.
