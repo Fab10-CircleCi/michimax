@@ -19,3 +19,6 @@ next-env.d.ts
 
 # contenido fuente sin optimizar (no se versiona)
 /netflix-CATalog-human/
+
+# logos originales generados con IA (los derivados se generan con npm run brand)
+/Gemini_*
