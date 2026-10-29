@@ -1,0 +1,82 @@
+.newsletter {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.input {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.button {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-6);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.error {
+  margin: var(--space-2) 0 0;
+  color: var(--color-accent);
+}
+
+.legal {
+  margin: var(--space-2) 0 0;
+  /* El #6E4A62 de marca daba 2.65:1 sobre el pie de página; el texto secundario del sitio da 13:1. */
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.success {
+  margin-bottom: var(--space-6);
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
