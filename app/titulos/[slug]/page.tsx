@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CastList } from "@/components/CastList";
+import { CatalogShell } from "@/components/CatalogShell";
 import { CategoryRow } from "@/components/CategoryRow";
 import { ShowMeta } from "@/components/ShowMeta";
 import { ShowPlayer } from "@/components/ShowPlayer";
@@ -37,7 +38,7 @@ export default async function TitlePage({ params }: Props) {
   const related = showsInCategory(show.category).filter((other) => other.slug !== show.slug);
 
   return (
-    <div className="container">
+    <CatalogShell active={show.category}>
       <div className={styles.layout}>
         <header className={styles.header}>
           <p className={styles.back}>
@@ -76,6 +77,6 @@ export default async function TitlePage({ params }: Props) {
       </div>
 
       <CategoryRow id="relacionados" title={`Más de ${category.name}`} shows={related} />
-    </div>
+    </CatalogShell>
   );
 }

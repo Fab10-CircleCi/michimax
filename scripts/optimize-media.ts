@@ -6,6 +6,7 @@
 //   - still-1.webp, still-2.webp, still-3.webp  (540×945)
 //   - clip.mp4                                  (480×832, H.264, sin audio)
 // Los tiles de 9 s se omiten: son el mismo clip seguido de los fotogramas.
+// Si existe intro-4s.mp4 genera public/intro/michimax-intro.mp4 y su póster (con audio).
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -16,6 +17,30 @@ const source = resolve(process.argv[2] ?? join(root, "netflix-CATalog-human"));
 const output = join(root, "public", "titulos");
 const STILL_WIDTH = 540;
 const STILL_HEIGHT = 945;
+const INTRO_POSTER_SECOND = "3.6"; // el logo completo, antes del fundido a negro
+
+async function optimizeIntro() {
+  const input = join(source, "intro-4s.mp4");
+  if (!existsSync(input)) return;
+  const to = join(root, "public", "intro");
+  mkdirSync(to, { recursive: true });
+  const video = join(to, "michimax-intro.mp4");
+  // El original trae una etiqueta de rotación de -90° que haría que se viera de lado.
+  execFileSync("ffmpeg", [
+    "-y", "-loglevel", "error",
+    "-display_rotation", "0", "-i", input,
+    "-map_metadata", "-1",
+    "-c:v", "libx264", "-preset", "slow", "-crf", "26", "-profile:v", "main", "-pix_fmt", "yuv420p",
+    "-c:a", "aac", "-b:a", "96k",
+    "-movflags", "+faststart",
+    video,
+  ]);
+  const frame = execFileSync("ffmpeg", [
+    "-loglevel", "error", "-ss", INTRO_POSTER_SECOND, "-i", video, "-frames:v", "1", "-f", "image2pipe", "-c:v", "png", "-",
+  ]);
+  await sharp(frame).webp({ quality: 80 }).toFile(join(to, "michimax-intro.webp"));
+  console.log(`✔ intro  video ${kilobytes(video)}`);
+}
 
 function kilobytes(path: string): string {
   return `${Math.round(statSync(path).size / 1024)} KB`;
@@ -61,3 +86,4 @@ async function main() {
 }
 
 await main();
+await optimizeIntro();

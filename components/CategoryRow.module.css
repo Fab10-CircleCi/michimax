@@ -4,6 +4,8 @@
 
 .title {
   font-size: 1.5rem;
+  /* Al saltar desde la barra de categorías, el título no queda debajo del encabezado fijo. */
+  scroll-margin-top: 88px;
 }
 
 /* En celular la fila se desliza de lado; las tarjetas son enlaces, así que el teclado también la recorre. */

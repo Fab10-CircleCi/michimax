@@ -1,7 +1,7 @@
 .layout {
   display: grid;
   gap: var(--space-6);
-  padding: var(--space-8) 0 var(--space-8);
+  padding: 0 0 var(--space-8);
 }
 
 /* En escritorio el reproductor va a la izquierda; el orden del DOM sigue siendo título → video → detalles. */

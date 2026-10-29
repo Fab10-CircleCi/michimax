@@ -1,0 +1,40 @@
+.intro {
+  width: min(100%, 320px);
+  margin: 0 auto;
+}
+
+.video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  box-shadow: 0 20px 40px rgb(0 0 0 / 45%);
+  cursor: pointer;
+}
+
+.replay {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-3) auto 0;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+  font: inherit;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.replay:hover {
+  filter: brightness(1.08);
+}
+
+.icon {
+  flex-shrink: 0;
+}
