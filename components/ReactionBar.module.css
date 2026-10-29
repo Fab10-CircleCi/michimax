@@ -1,0 +1,40 @@
+.bar {
+  position: absolute;
+  right: var(--space-3);
+  bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 55%);
+  color: #fff;
+  cursor: pointer;
+}
+
+.active {
+  color: #ff7eb3;
+}
+
+.count {
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: #2a1424;
+  color: #7a3b63;
+  font-size: 12px;
+  font-weight: 600;
+}
