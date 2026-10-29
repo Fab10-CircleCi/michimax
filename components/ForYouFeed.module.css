@@ -65,12 +65,15 @@
   background: var(--color-gold);
 }
 
+/* Fondo sólido: el texto sobre el video no se puede evaluar (ni leer bien) con un fondo en movimiento. */
 .overlay {
   position: absolute;
   right: 80px;
   bottom: var(--space-6);
   left: var(--space-4);
-  text-shadow: 0 2px 8px rgb(0 0 0 / 80%);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
 }
 
 .title {
@@ -152,11 +155,17 @@
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   background: var(--color-surface);
   transform: translateY(100%);
-  transition: transform 250ms ease;
+  /* Cerrado queda oculto (no tapa el pie de página en celular); se oculta al terminar de bajar. */
+  visibility: hidden;
+  transition:
+    transform 250ms ease,
+    visibility 0s linear 250ms;
 }
 
 .sheetOpen {
   transform: translateY(0);
+  visibility: visible;
+  transition: transform 250ms ease;
 }
 
 .sheetHeader {
@@ -167,10 +176,16 @@
 
 .sheetTitle {
   margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
   border: 0;
   background: none;
   color: var(--color-text);
@@ -211,5 +226,20 @@
   color: var(--color-on-gold);
   font: inherit;
   font-weight: 700;
+  cursor: pointer;
+}
+
+.playback {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 55%);
+  color: #fff;
   cursor: pointer;
 }

@@ -17,14 +17,15 @@ describe("buildFeed", () => {
 describe("ForYouFeed", () => {
   it("muestra un enlace al título por cada clip", () => {
     render(<ForYouFeed />);
-    expect(screen.getAllByRole("link", { name: "Ver título" })).toHaveLength(shows.length);
+    expect(screen.getAllByRole("link", { name: /^Ver título: / })).toHaveLength(shows.length);
   });
 
   it("agrega un comentario nuevo", async () => {
     const user = userEvent.setup();
     render(<ForYouFeed />);
 
-    await user.type(screen.getByPlaceholderText("Escribe un comentario…"), "¡Qué drama!");
+    await user.click(screen.getAllByRole("button", { name: /^Comentarios de / })[0]);
+    await user.type(screen.getByLabelText("Escribe un comentario"), "¡Qué drama!");
     await user.click(screen.getByRole("button", { name: "Enviar" }));
 
     expect(screen.getByText("¡Qué drama!")).toBeInTheDocument();
@@ -37,5 +38,15 @@ describe("ForYouFeed", () => {
     fireEvent.doubleClick(firstVideo.parentElement!);
 
     expect(screen.getByText("❤")).toBeInTheDocument();
+  });
+
+  it("nombra cada control y cada barra de progreso", () => {
+    render(<ForYouFeed />);
+    const [first] = buildFeed();
+
+    expect(screen.getByRole("heading", { level: 1, name: "Para ti" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: `Me encanta ${first.show.title}` })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: `Reproducir ${first.show.title}` })).toBeInTheDocument();
+    expect(screen.getByRole("progressbar", { name: `Progreso de ${first.show.title}` })).toBeInTheDocument();
   });
 });
