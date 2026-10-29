@@ -31,4 +31,23 @@ describe("NewsletterForm", () => {
 
     expect(screen.getByText("¡Bienvenida al chisme!")).toBeInTheDocument();
   });
+
+  it("cada campo tiene su etiqueta visible", () => {
+    render(<NewsletterForm />);
+
+    expect(screen.getByLabelText("Correo electrónico")).toHaveAttribute("type", "email");
+    expect(screen.getByLabelText("Título favorito").tagName).toBe("SELECT");
+    expect(screen.getByLabelText("Acepto recibir el boletín")).toHaveAttribute("type", "checkbox");
+  });
+
+  it("asocia el error al campo de correo y lo anuncia", async () => {
+    const user = userEvent.setup();
+    render(<NewsletterForm />);
+
+    await user.type(screen.getByLabelText("Correo electrónico"), "michi-sin-arroba");
+    await user.click(screen.getByRole("button", { name: "Suscribirme" }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("Ese correo no parece válido.");
+    expect(screen.getByLabelText("Correo electrónico")).toHaveAccessibleDescription("Ese correo no parece válido.");
+  });
 });
