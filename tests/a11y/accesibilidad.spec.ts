@@ -6,6 +6,9 @@ import { discoverStaticRoutes, toInternalPage } from "./routes";
 
 const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const MAX_CRAWLED_PAGES = 60;
+// El rastreo revisa todas las páginas de títulos en una sola prueba: en CI tarda ~4 veces más que en local,
+// así que necesita más que los 30 s por defecto de Playwright.
+const CRAWL_TIMEOUT_MS = 180_000;
 
 const staticRoutes = discoverStaticRoutes(join(process.cwd(), "app"));
 
@@ -42,6 +45,7 @@ test.describe("Accesibilidad (axe-core)", () => {
   }
 
   test("páginas descubiertas por enlaces", async ({ page, baseURL }, testInfo) => {
+    test.setTimeout(CRAWL_TIMEOUT_MS);
     const origin = new URL(baseURL!).origin;
     const queue = [...staticRoutes];
     const seen = new Set(staticRoutes);
