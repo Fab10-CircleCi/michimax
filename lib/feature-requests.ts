@@ -5,8 +5,12 @@ export type FeatureRequest = {
   number: number;
   title: string;
   summary: string;
+  /** Rama que crea el agente del asistente. */
   branch: string;
-  fallbackBranch: string;
+  /** Paso 2 del taller: la funcionalidad ya construida, rompiendo la accesibilidad. */
+  brokenBranch: string;
+  /** Paso 3 del taller: la misma funcionalidad, arreglada. */
+  fixedBranch: string;
   prompt: string;
 };
 
@@ -42,7 +46,8 @@ export const featureRequests: FeatureRequest[] = [
     title: "Botonera de reacciones",
     summary: "Botones flotantes estilo TikTok sobre el reproductor vertical para reaccionar a cada título.",
     branch: "feat/reacciones",
-    fallbackBranch: "fallback/01-reacciones",
+    brokenBranch: "02-feature-01-reacciones-BROKEN",
+    fixedBranch: "03-feature-01-reacciones-FIXED",
     prompt: buildPrompt(
       "Botonera de reacciones",
       "Como fan de Michimax quiero reaccionar a cada título desde el reproductor vertical, como en TikTok, para mostrar qué tanto me gustó.",
@@ -64,7 +69,8 @@ export const featureRequests: FeatureRequest[] = [
     title: "Galería del reparto",
     summary: "Tarjetas con foto para conocer y seguir a los gatos protagonistas de cada título.",
     branch: "feat/galeria-reparto",
-    fallbackBranch: "fallback/02-galeria-reparto",
+    brokenBranch: "02-feature-02-galeria-BROKEN",
+    fixedBranch: "03-feature-02-galeria-FIXED",
     prompt: buildPrompt(
       "Galería del reparto",
       "Como fan quiero conocer al reparto de cada título con fotos y seguir a mis gatos favoritos.",
@@ -85,7 +91,8 @@ export const featureRequests: FeatureRequest[] = [
     title: "Boletín «El Chisme Felino»",
     summary: "Formulario de suscripción al boletín semanal en el pie de página de todo el sitio.",
     branch: "feat/boletin",
-    fallbackBranch: "fallback/03-boletin",
+    brokenBranch: "02-feature-03-boletin-BROKEN",
+    fixedBranch: "03-feature-03-boletin-FIXED",
     prompt: buildPrompt(
       "Boletín «El Chisme Felino»",
       "Como fan quiero suscribirme al boletín semanal de Michimax para enterarme de estrenos, chismes y nuevas temporadas.",
@@ -106,7 +113,8 @@ export const featureRequests: FeatureRequest[] = [
     title: "Feed «Para ti»",
     summary: "Un feed vertical a pantalla completa, tipo TikTok, con los clips de todo el catálogo.",
     branch: "feat/para-ti",
-    fallbackBranch: "fallback/04-para-ti",
+    brokenBranch: "02-feature-04-parati-BROKEN",
+    fixedBranch: "03-feature-04-parati-FIXED",
     prompt: buildPrompt(
       "Feed «Para ti»",
       "Como fan quiero un feed vertical tipo TikTok con los clips de todo Michimax para descubrir títulos nuevos deslizando con el dedo.",
@@ -126,13 +134,7 @@ export const featureRequests: FeatureRequest[] = [
   },
 ];
 
-/** Rama propia del respaldo: no choca con la rama feat/ que haya creado el agente. */
-export function fallbackLocalBranch(request: FeatureRequest): string {
-  return `respaldo/${request.id}`;
-}
-
-/** Se puede repetir sin error: `switch -C` recrea la rama local con el contenido del respaldo. */
-export function fallbackCommand(request: FeatureRequest): string {
-  const branch = fallbackLocalBranch(request);
-  return `git fetch ${UPSTREAM_REPO_URL}.git ${request.fallbackBranch} && git switch -C ${branch} FETCH_HEAD && git push -u origin ${branch}`;
+/** Trae una rama del repositorio original a tu fork, con el mismo nombre. Se puede repetir sin error. */
+export function branchCommand(branch: string): string {
+  return `git fetch ${UPSTREAM_REPO_URL}.git ${branch} && git switch -C ${branch} FETCH_HEAD && git push -u origin ${branch}`;
 }

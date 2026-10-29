@@ -64,3 +64,13 @@
   color: var(--color-text-muted);
   font-size: 0.9375rem;
 }
+
+.step + .step {
+  margin-top: var(--space-4);
+}
+
+.stepTitle {
+  margin: var(--space-3) 0 var(--space-1);
+  color: var(--color-text);
+  font-weight: 700;
+}
