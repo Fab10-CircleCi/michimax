@@ -1,14 +1,14 @@
 <!-- paso-del-taller:inicio -->
 > **Paso 2 de 4 · Boletín «El Chisme Felino» · funcionalidad construida, con la accesibilidad rota**
 >
-> - **Viene de:** `01-comienzo` + la funcionalidad construida tal como la pide su prompt en `/solicitudes`.
+> - **Viene de:** `Paso-01-comienzo` + la funcionalidad construida tal como la pide su prompt en `/solicitudes`.
 > - **Qué esperar en CircleCI:** `lint`, `typecheck` y `unit-tests` en verde; `accessibility` en **rojo** (`label`, `select-name`, `color-contrast`).
 > - **Siguiente:** abre el pipeline rojo, usa «copiar prompt» en el error y pégalo en el CLI de CircleCI para arreglarlo → paso 3.
 > - **¿Te atrasaste?** Trae esta rama a tu fork:
 >   ```bash
->   git fetch https://github.com/Fab10-CircleCi/michimax.git 02-feature-03-boletin-BROKEN && git switch -C 02-feature-03-boletin-BROKEN FETCH_HEAD && git push -u origin 02-feature-03-boletin-BROKEN
+>   git fetch https://github.com/Fab10-CircleCi/michimax.git Paso-02-feature-03-boletin-BROKEN && git switch -C Paso-02-feature-03-boletin-BROKEN FETCH_HEAD && git push -u origin Paso-02-feature-03-boletin-BROKEN
 >   ```
->   ¿El arreglo no salió? Salta al paso 3 con el mismo comando y la rama `03-feature-03-boletin-FIXED`.
+>   ¿El arreglo no salió? Salta al paso 3 con el mismo comando y la rama `Paso-03-feature-03-boletin-FIXED`.
 <!-- paso-del-taller:fin -->
 
 # Michimax 🐾
