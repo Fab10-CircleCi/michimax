@@ -1,10 +1,9 @@
-import { fallbackCommand, fallbackLocalBranch, type FeatureRequest } from "@/lib/feature-requests";
+import { branchCommand, type FeatureRequest } from "@/lib/feature-requests";
 import { CopyButton } from "./CopyButton";
 import styles from "./FeatureRequestCard.module.css";
 
 export function FeatureRequestCard({ request }: { request: FeatureRequest }) {
   const headingId = `solicitud-${request.id}`;
-  const command = fallbackCommand(request);
 
   return (
     <article className={styles.card} aria-labelledby={headingId}>
@@ -22,20 +21,35 @@ export function FeatureRequestCard({ request }: { request: FeatureRequest }) {
       </details>
 
       <div className={styles.fallback}>
-        <h3 className={styles.fallbackTitle}>¿Sin tiempo? Usa la rama de respaldo</h3>
-        <p className={styles.fallbackText}>
-          Trae la versión ya construida y súbela a tu fork como la rama <code>{fallbackLocalBranch(request)}</code>:
-        </p>
-        <pre className={styles.command}>
-          <code>{command}</code>
-        </pre>
-        <CopyButton
-          text={command}
-          label="Copiar comando"
-          context={`rama de respaldo de ${request.title}`}
-          variant="secondary"
+        <h3 className={styles.fallbackTitle}>¿Sin tiempo? Usa las ramas de respaldo</h3>
+        <BranchStep
+          title="Paso 2: la funcionalidad ya construida"
+          branch={request.brokenBranch}
+          context={`rama de respaldo rota de ${request.title}`}
+        />
+        <BranchStep
+          title="Paso 3: la funcionalidad arreglada"
+          branch={request.fixedBranch}
+          context={`rama de respaldo arreglada de ${request.title}`}
         />
       </div>
     </article>
+  );
+}
+
+function BranchStep({ title, branch, context }: { title: string; branch: string; context: string }) {
+  const command = branchCommand(branch);
+
+  return (
+    <div className={styles.step}>
+      <p className={styles.stepTitle}>{title}</p>
+      <p className={styles.fallbackText}>
+        Sube a tu fork la rama <code>{branch}</code>:
+      </p>
+      <pre className={styles.command}>
+        <code>{command}</code>
+      </pre>
+      <CopyButton text={command} label="Copiar comando" context={context} variant="secondary" />
+    </div>
   );
 }
