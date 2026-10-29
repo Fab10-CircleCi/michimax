@@ -1,15 +1,19 @@
+import type { Metadata } from "next";
 import { ideas } from "@/lib/ideas";
-import styles from "./IdeasSection.module.css";
+import styles from "./page.module.css";
 
-export function IdeasSection() {
+export const metadata: Metadata = {
+  title: "Sugerencias",
+  description: "Ideas para seguir construyendo Michimax después del taller.",
+};
+
+export default function SugerenciasPage() {
   return (
-    <section className={styles.section} aria-labelledby="titulo-ideas">
-      <h2 id="titulo-ideas" className={styles.title}>
-        Ideas para seguir construyendo
-      </h2>
+    <div className={`container ${styles.page}`}>
+      <h1 className={styles.title}>Sugerencias para seguir construyendo</h1>
       <p className={styles.lead}>
         Terminaste el taller. Estas son pistas, no prompts: cada una está pensada para 10–15 minutos con tu
-        agente de IA. Escribe tú la solicitud y cumple estas tres reglas:
+        agente de IA. Escribe tú la petición y cumple estas tres reglas:
       </p>
       <ul className={styles.rules}>
         <li>
@@ -26,6 +30,7 @@ export function IdeasSection() {
         </li>
       </ul>
 
+      <h2 className={styles.listTitle}>{ideas.length} ideas</h2>
       <ul className={styles.ideas}>
         {ideas.map((idea) => (
           <li key={idea.title} className={styles.idea}>
@@ -37,6 +42,6 @@ export function IdeasSection() {
           </li>
         ))}
       </ul>
-    </section>
+    </div>
   );
 }

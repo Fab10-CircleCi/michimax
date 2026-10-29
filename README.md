@@ -3,7 +3,7 @@
 >
 > - **Viene de:** `Paso-01-comienzo` + las cuatro ramas `Paso-03-feature-…-FIXED` integradas.
 > - **Qué esperar en CircleCI:** los 4 jobs en verde.
-> - **Siguiente:** fin del taller. Compara esta rama con la tuya o sigue con las 20 «Ideas para seguir construyendo» al final de `/solicitudes`.
+> - **Siguiente:** fin del taller. Compara esta rama con la tuya o sigue con las 20 ideas de <http://localhost:3000/sugerencias>.
 > - **¿Te atrasaste?** Trae el resultado final a tu fork:
 >   ```bash
 >   git fetch https://github.com/Fab10-CircleCi/michimax.git Paso-04-todas-las-funcionalidades && git switch -C Paso-04-todas-las-funcionalidades FETCH_HEAD && git push -u origin Paso-04-todas-las-funcionalidades
@@ -29,7 +29,7 @@ npm ci
 npm run dev
 ```
 
-Abre <http://localhost:3000>. Las funcionalidades para construir durante el taller están en <http://localhost:3000/solicitudes>.
+Abre <http://localhost:3000>. En esta rama las cuatro funcionalidades del taller ya están construidas; en <http://localhost:3000/sugerencias> hay ideas para seguir.
 
 ## Scripts
 
@@ -50,10 +50,10 @@ Abre <http://localhost:3000>. Las funcionalidades para construir durante el tall
 2. **Conecta tu fork a CircleCI**: en CircleCI ve a *Projects*, busca tu fork de `michimax`, elige *Set Up Project* y usa el archivo `.circleci/config.yml` que ya existe en la rama `main`.
 3. **Espera tu primer pipeline en verde** en `main`. Si no queda en verde, avisa antes de seguir.
 4. **Clona tu fork** y arranca el sitio con `npm ci && npm run dev`.
-5. **Elige una solicitud** en <http://localhost:3000/solicitudes>, copia su prompt y pégalo en tu agente de IA.
+5. **Elige una funcionalidad** del taller (en la rama `main`), copia su prompt y pégalo en tu agente de IA.
 6. **Revisa tu pipeline** en CircleCI cuando el agente suba la rama a tu fork.
 
-¿Sin tiempo para construir? Cada solicitud trae un comando para copiar una rama de respaldo ya construida.
+¿Sin tiempo para construir? Cada funcionalidad tiene ramas de respaldo `Paso-02-…` (rota) y `Paso-03-…` (arreglada).
 
 ## Estructura
 
@@ -61,7 +61,7 @@ Abre <http://localhost:3000>. Las funcionalidades para construir durante el tall
 app/                  Páginas (App Router)
   page.tsx            Portada: título destacado y una fila por categoría
   titulos/[slug]/     Página de cada título con el reproductor vertical
-  solicitudes/        Funcionalidades para el taller
+  sugerencias/        Ideas para seguir construyendo
 components/           Componentes con su CSS Module
 lib/catalog.ts        Los 30 títulos y sus 10 categorías
 lib/                  Otras utilidades
