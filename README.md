@@ -1,3 +1,15 @@
+<!-- paso-del-taller:inicio -->
+> **Paso 3 de 4 · Boletín «El Chisme Felino» · funcionalidad arreglada**
+>
+> - **Viene de:** `02-feature-03-boletin-BROKEN` + un commit «Arregla…»: los tres campos tienen etiqueta visible, el error y la bienvenida se anuncian y el texto legal usa el color secundario del sitio.
+> - **Qué esperar en CircleCI:** los 4 jobs en verde.
+> - **Siguiente:** prueba otra solicitud o mira el resultado final en `04-todas-las-funcionalidades` → paso 4.
+> - **¿Te atrasaste?** Trae esta rama a tu fork:
+>   ```bash
+>   git fetch https://github.com/Fab10-CircleCi/michimax.git 03-feature-03-boletin-FIXED && git switch -C 03-feature-03-boletin-FIXED FETCH_HEAD && git push -u origin 03-feature-03-boletin-FIXED
+>   ```
+<!-- paso-del-taller:fin -->
+
 # Michimax 🐾
 
 **Streaming felino en formato vertical.** Treinta series, películas, documentales y realities protagonizados por gatos, en diez categorías: de *The Midnight Prowler* a *The Crown Jewels*.
